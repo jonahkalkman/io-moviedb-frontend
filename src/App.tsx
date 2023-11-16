@@ -1,17 +1,12 @@
 import Search from './components/Search';
 import {
+  Link,
   BrowserRouter as Router,
-  NavLink,
-  Route,
-  Routes,
 } from 'react-router-dom';
 import './index.css';
-import Home from './routes/Home';
-import Favorites from './routes/Favorites';
 import { MovieProvider } from './contexts/MovieContext';
-import Detail from './routes/Detail';
-import Edit from './routes/Edit';
-import NotFound from './routes/NotFound';
+import Navigation from './components/Navigation';
+import MainRouter from './components/MainRouter';
 
 const App = () => {
   return (
@@ -23,7 +18,7 @@ const App = () => {
               <div className="relative flex justify-between xl:grid xl:grid-cols-12 lg:gap-8">
                 <div className="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">
                   <div className="flex-shrink-0 flex items-center">
-                    <a href="#">MovieDB</a>
+                    <Link to="/">MovieDB</Link>
                   </div>
                 </div>
                 <div className="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-6">
@@ -43,36 +38,13 @@ const App = () => {
                 >
                   <div className="pb-8 space-y-1">
                     {/* navigation */}
-                    <ul>
-                      <li>
-                        <NavLink
-                          to="/"
-                          className="block bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded mb-2 w-full"
-                        >
-                          Home
-                        </NavLink>
-                      </li>
-                      <li>
-                        <NavLink
-                          to="/favorites"
-                          className="block bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded w-full"
-                        >
-                          Favorites
-                        </NavLink>
-                      </li>
-                    </ul>
+                    <Navigation />
                   </div>
                 </nav>
               </div>
               <main className="lg:col-span-9">
                 {/* routing */}
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/favorites" element={<Favorites />} />
-                  <Route path="/detail/:movieId" element={<Detail />} />
-                  <Route path="/edit/:movieId" element={<Edit />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
+                <MainRouter />
               </main>
             </div>
           </div>

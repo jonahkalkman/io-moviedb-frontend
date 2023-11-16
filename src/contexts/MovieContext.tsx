@@ -4,10 +4,10 @@ import { MovieOverview } from '../model/search';
 import { IMDBMovie } from '../model/movie';
 
 interface MovieContextProps {
-  movies: MovieOverview[];
-  setMovies: (newMovies: MovieOverview[]) => void;
   favorites: IMDBMovie[];
   setFavorites: (newFavorites: IMDBMovie[]) => void;
+  searchQuery?: string;
+  setSearchQuery: (searchQuery: string) => void;
 }
 
 const MovieContext = createContext<MovieContextProps | undefined>(undefined);
@@ -17,7 +17,7 @@ interface MovieProviderProps {
 }
 
 export const MovieProvider: React.FC<MovieProviderProps> = ({ children }) => {
-  const [movies, setMovies] = useState<MovieOverview[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>();
   const [favorites, setFavorites] = useState<IMDBMovie[]>([]);
 
   // Load favorites from localStorage on component mount
@@ -37,7 +37,7 @@ export const MovieProvider: React.FC<MovieProviderProps> = ({ children }) => {
 
   return (
     <MovieContext.Provider
-      value={{ movies, setMovies, favorites, setFavorites }}
+      value={{ favorites, setFavorites, searchQuery, setSearchQuery }}
     >
       {children}
     </MovieContext.Provider>

@@ -4,12 +4,14 @@ import { useMovieContext } from '../contexts/MovieContext';
 import { useSearchParams } from 'react-router-dom';
 import Spinner from '../components/Spinner';
 import { searchMovies } from '../api/searchMovies';
+import { MovieOverview } from '../model/search';
 
 const Home: FunctionComponent = () => {
-  const [searchParams] = useSearchParams();
+  const { searchQuery } = useMovieContext();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [hasError, setHasError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const { movies, setMovies } = useMovieContext();
+  const [movies, setMovies] = useState<MovieOverview[]>([]);
   const searchValue = searchParams.get('search');
 
   useEffect(() => {
@@ -28,11 +30,20 @@ const Home: FunctionComponent = () => {
           setHasError(true);
           setLoading(false);
         }
+      } else {
+        setMovies([]);
       }
     };
 
     fetchData();
   }, [searchParams]);
+
+  useEffect(() => {
+    if (searchValue != searchQuery) {
+      const params = new URLSearchParams(`search=${searchQuery}`);
+      setSearchParams(params);
+    }
+  }, [searchQuery])
 
   return (
     <>
