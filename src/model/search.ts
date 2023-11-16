@@ -1,4 +1,5 @@
 export interface OverviewSearch {
+  Response: string;
   Search: MovieOverview[];
   TotalMovies: string;
 }

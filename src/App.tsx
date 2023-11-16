@@ -10,6 +10,8 @@ import Home from './routes/Home';
 import Favorites from './routes/Favorites';
 import { MovieProvider } from './contexts/MovieContext';
 import Detail from './routes/Detail';
+import Edit from './routes/Edit';
+import NotFound from './routes/NotFound';
 
 const App = () => {
   return (
@@ -68,6 +70,8 @@ const App = () => {
                   <Route path="/" element={<Home />} />
                   <Route path="/favorites" element={<Favorites />} />
                   <Route path="/detail/:movieId" element={<Detail />} />
+                  <Route path="/edit/:movieId" element={<Edit />} />
+                  <Route path="*" element={<NotFound />} />
                 </Routes>
               </main>
             </div>
