@@ -1,9 +1,15 @@
 import { FunctionComponent } from 'react';
 import { useMovieContext } from '../contexts/MovieContext';
 import MovieCard from '../components/MovieCard';
+import { useNavigate } from 'react-router-dom';
 
 const Favorites: FunctionComponent = () => {
-  const { favorites } = useMovieContext();
+  const { favorites, setFavorites } = useMovieContext();
+  const navigate = useNavigate();
+
+  const deleteFavoriteMovie = (id: string) => {
+    setFavorites(favorites.filter(movie => movie.imdbID !== id));
+  }
 
   return (
     <ul
@@ -17,6 +23,17 @@ const Favorites: FunctionComponent = () => {
               title={favoriteMovie.Title}
               image={favoriteMovie.Poster}
               year={favoriteMovie.Year}
+              isEditable={true}
+              onEdit={(id: string) => {
+                navigate(`/edit?movieId=${id}`, {
+                  state: {
+                    movieId: id
+                  }
+                })
+              }}
+              onDelete={(id: string) => {
+                deleteFavoriteMovie(id);
+              }}
             />
           ))
         : null}

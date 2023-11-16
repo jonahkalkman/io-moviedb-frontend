@@ -6,7 +6,9 @@ interface MovieCardProps {
   image: string;
   title: string;
   year: string;
-  isEditable: string;
+  isEditable?: boolean;
+  onEdit?: (id: string) => void;
+  onDelete?: (id: string) => void;
 }
 
 const MovieCard: FunctionComponent<MovieCardProps> = ({
@@ -15,20 +17,36 @@ const MovieCard: FunctionComponent<MovieCardProps> = ({
   title,
   year,
   isEditable,
+  onEdit,
+  onDelete
 }: MovieCardProps) => {
+  const renderActions = isEditable && onEdit && onDelete ? (
+    <div className="p-4 flex gap-8 mx-auto">
+      <button className="text-orange-500" onClick={() => onEdit(id)}>Edit</button>
+      <button className="text-red-500" onClick={() => onDelete(id)}>Delete</button>
+    </div>
+  ) : null;
+
+  const cardContent = (
+    <div className="flex-1 flex flex-col">
+      <img className="h-48 mx-auto mt-4" src={image} alt={title} />
+      <div className="p-4">
+        <h3 className="mt-6 text-gray-900 text-sm font-medium">{title}</h3>
+        <dl className="mt-1 flex-grow flex flex-col justify-between">
+          <dd className="text-gray-500 text-sm">{year}</dd>
+        </dl>
+      </div>
+      {renderActions}
+    </div>
+  );
+
   return (
     <li className="col-span-1 flex flex-col text-center bg-white rounded-lg shadow divide-y divide-gray-200">
-      <Link to={`/detail/${id}`}>
-        <div className="flex-1 flex flex-col">
-          <img className="h-48 mx-auto mt-4" src={image} alt={title} />
-          <div className="p-4">
-            <h3 className="mt-6 text-gray-900 text-sm font-medium">{title}</h3>
-            <dl className="mt-1 flex-grow flex flex-col justify-between">
-              <dd className="text-gray-500 text-sm">{year}</dd>
-            </dl>
-          </div>
-        </div>
-      </Link>
+      {isEditable ? (
+        <div>{cardContent}</div>
+      ) : (
+        <Link to={`/detail/${id}`}>{cardContent}</Link>
+      )}
     </li>
   );
 };
