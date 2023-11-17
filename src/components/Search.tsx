@@ -43,6 +43,7 @@ const Search: FunctionComponent = () => {
   };
 
   useEffect(() => {
+    // Update the input search value if the searchQuery is updated from another component (direct search)
     if(searchQuery) {
       setSearchValue(searchQuery)
     }

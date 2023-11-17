@@ -39,10 +39,12 @@ const Home: FunctionComponent = () => {
   }, [searchParams]);
 
   useEffect(() => {
+    // Update the searchParam if navigating from another route
     if (searchValue !== searchQuery && searchQuery !== undefined) {
       const params = new URLSearchParams(`search=${searchQuery}`);
       setSearchParams(params);
     } else if(searchValue) {
+      // Update the searchQuery on direct search, example directly to: https://example/?search=test
       setSearchQuery(searchValue);
     }
   }, [searchQuery])
