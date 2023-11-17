@@ -1,4 +1,3 @@
-// MovieContext.js
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { IMDBMovie } from '../model/movie';
 

@@ -1,10 +1,10 @@
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import { createSearchParams, useNavigate } from 'react-router-dom';
 import { useMovieContext } from '../contexts/MovieContext';
 import SearchIcon from './SearchIcon';
 
 const Search: FunctionComponent = () => {
-  const { setSearchQuery } = useMovieContext();
+  const { searchQuery, setSearchQuery } = useMovieContext();
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState<string>('');
   const [debounceTimer, setDebounceTimer] = useState<number | null>(null);
@@ -41,6 +41,12 @@ const Search: FunctionComponent = () => {
       });
     }
   };
+
+  useEffect(() => {
+    if(searchQuery) {
+      setSearchValue(searchQuery)
+    }
+  }, [searchQuery])
 
   return (
     <div className="w-full">

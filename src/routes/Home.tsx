@@ -7,7 +7,7 @@ import { searchMovies } from '../api/searchMovies';
 import { MovieOverview } from '../model/search';
 
 const Home: FunctionComponent = () => {
-  const { searchQuery } = useMovieContext();
+  const { searchQuery, setSearchQuery } = useMovieContext();
   const [searchParams, setSearchParams] = useSearchParams();
   const [hasError, setHasError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -39,9 +39,11 @@ const Home: FunctionComponent = () => {
   }, [searchParams]);
 
   useEffect(() => {
-    if (searchValue != searchQuery) {
+    if (searchValue !== searchQuery && searchQuery !== undefined) {
       const params = new URLSearchParams(`search=${searchQuery}`);
       setSearchParams(params);
+    } else if(searchValue) {
+      setSearchQuery(searchValue);
     }
   }, [searchQuery])
 
