@@ -1,6 +1,5 @@
 // MovieContext.js
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import { MovieOverview } from '../model/search';
 import { IMDBMovie } from '../model/movie';
 
 interface MovieContextProps {
