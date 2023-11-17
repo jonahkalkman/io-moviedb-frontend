@@ -29,7 +29,15 @@ const MovieCard: FunctionComponent<MovieCardProps> = ({
 
   const cardContent = (
     <div className="flex-1 flex flex-col">
-      <img className="h-48 mx-auto mt-4" src={image} alt={title} />
+      {image ? (
+        <img className="h-48 mx-auto mt-4" src={image} alt={title} />
+      ) : (
+        <img 
+          className="h-48 mx-auto mt-4" 
+          src={'https://images.placeholders.dev/?width=1000&height=1000&text=%22No%20poster%22'} 
+          alt={title} 
+        />
+      )}
       <div className="p-4">
         <h3 className="mt-6 text-gray-900 text-sm font-medium">{title}</h3>
         <dl className="mt-1 flex-grow flex flex-col justify-between">

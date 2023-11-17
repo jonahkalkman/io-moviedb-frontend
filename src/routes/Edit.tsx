@@ -60,7 +60,7 @@ const Edit: FunctionComponent = () => {
       actors: movie?.Actors || '' 
     },
     validate: (values) => {
-      const errors: EditableMovie = {};
+      const errors: any = {};
       if (!values.title) {
         errors.title = 'Title is a required field';
       }
@@ -79,6 +79,12 @@ const Edit: FunctionComponent = () => {
       updateFavorite(values);
     },
   });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    formik.handleChange(e); 
+    // Reset the form status on input change
+    formik.setStatus(null);
+  };
 
   return (
     <>
@@ -106,7 +112,7 @@ const Edit: FunctionComponent = () => {
                           name="title"
                           type="text"
                           className="shadow-sm p-2 block w-full sm:text-sm border-gray-300 rounded-md"
-                          onChange={formik.handleChange}
+                          onChange={handleInputChange}
                           value={formik.values.title}
                         />
                         {formik.errors.title ? <p className="text-red-500 mt-1">{formik.errors.title}</p> : null}
@@ -123,7 +129,7 @@ const Edit: FunctionComponent = () => {
                           name="year"
                           type="text"
                           className="shadow-sm p-2 block w-full sm:text-sm border-gray-300 rounded-md"
-                          onChange={formik.handleChange}
+                          onChange={handleInputChange}
                           value={formik.values.year}
                         />
                         {formik.errors.year ? <p className="text-red-500 mt-1">{formik.errors.year}</p> : null}
@@ -140,7 +146,7 @@ const Edit: FunctionComponent = () => {
                           name="actors"
                           type="text"
                           className="shadow-sm p-2 block w-full sm:text-sm border-gray-300 rounded-md"
-                          onChange={formik.handleChange}
+                          onChange={handleInputChange}                          
                           value={formik.values.actors}
                         />
                         {formik.errors.actors ? <p className="text-red-500 mt-1">{formik.errors.actors}</p> : null}
