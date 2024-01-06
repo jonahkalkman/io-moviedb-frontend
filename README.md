@@ -1,4 +1,5 @@
 # io-moviedb-frontend
+Frontend assignment for iO Digital
 
 [Edit in Codeflow ⚡️](https://stackblitz.com/~/github.com/jonahkalkman/io-moviedb-frontend)
 
