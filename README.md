@@ -1,5 +1,5 @@
 # io-moviedb-frontend
-Frontend assignment for iO Digital
+A frontend assignment for iO Digital in Rotterdam that got me a job offer in their development team.
 
 [Edit in Codeflow ⚡️](https://stackblitz.com/~/github.com/jonahkalkman/io-moviedb-frontend)
 
