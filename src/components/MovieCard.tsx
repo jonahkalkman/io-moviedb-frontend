@@ -1,29 +1,32 @@
 import { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 
-interface MovieCardProps {
+interface BaseMovieCardProps {
   id: string;
   image: string;
   title: string;
   year: string;
-  isEditable?: boolean;
-  onEdit?: (id: string) => void;
-  onDelete?: (id: string) => void;
 }
 
-const MovieCard: FunctionComponent<MovieCardProps> = ({
-  id,
-  image,
-  title,
-  year,
-  isEditable,
-  onEdit,
-  onDelete
-}: MovieCardProps) => {
-  const renderActions = isEditable && onEdit && onDelete ? (
+interface EditableMovieCardProps extends BaseMovieCardProps {
+  isEditable: true;
+  onEdit: (id: string) => void;
+  onDelete: (id: string) => void;
+}
+
+interface NonEditableMovieCardProps extends BaseMovieCardProps {
+  isEditable?: false;
+}
+
+type MovieCardProps = EditableMovieCardProps | NonEditableMovieCardProps;
+
+const MovieCard: FunctionComponent<MovieCardProps> = (props) => {
+  const { id, image, title, year, isEditable } = props;
+
+  const renderActions = isEditable ? (  
     <div className="p-4 flex gap-8 mx-auto">
-      <button className="text-orange-500" onClick={() => onEdit(id)}>Edit</button>
-      <button className="text-red-500" onClick={() => onDelete(id)}>Delete</button>
+      <button className="text-orange-500" onClick={() => (props as EditableMovieCardProps).onEdit(id)}>Edit</button>
+      <button className="text-red-500" onClick={() => (props as EditableMovieCardProps).onDelete(id)}>Delete</button>
     </div>
   ) : null;
 

@@ -4,7 +4,6 @@ import { useMovieContext } from '../contexts/MovieContext';
 import SearchIcon from './SearchIcon';
 
 const Search: FunctionComponent = () => {
-  const { searchQuery, setSearchQuery } = useMovieContext();
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState<string>('');
   const [debounceTimer, setDebounceTimer] = useState<number | null>(null);
@@ -20,19 +19,17 @@ const Search: FunctionComponent = () => {
 
     if(value !== '') {
       const timer = setTimeout(() => {
-        setSearchQuery(value);
-          navigate({
-            pathname: '/',
-            search: createSearchParams({
-              search: value,
-            }).toString(),
-          });
+        navigate({
+          pathname: '/',
+          search: createSearchParams({
+            search: value,
+          }).toString(),
+        });
       }, 500);
   
       setDebounceTimer(timer);
     } else {
       // No debounce if the value is empty by typing or clearing the field
-      setSearchQuery(value);
       navigate({
         pathname: '/',
         search: createSearchParams({
@@ -41,13 +38,6 @@ const Search: FunctionComponent = () => {
       });
     }
   };
-
-  useEffect(() => {
-    // Update the input search value if the searchQuery is updated from another component (direct search)
-    if(searchQuery) {
-      setSearchValue(searchQuery)
-    }
-  }, [searchQuery])
 
   return (
     <div className="w-full">

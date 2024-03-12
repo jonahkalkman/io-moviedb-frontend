@@ -1,14 +1,12 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import MovieCard from '../components/MovieCard';
-import { useMovieContext } from '../contexts/MovieContext';
 import { useSearchParams } from 'react-router-dom';
 import Spinner from '../components/Spinner';
 import { searchMovies } from '../api/searchMovies';
 import { MovieOverview } from '../model/search';
 
 const Home: FunctionComponent = () => {
-  const { searchQuery, setSearchQuery } = useMovieContext();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [hasError, setHasError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [movies, setMovies] = useState<MovieOverview[]>([]);
@@ -25,9 +23,9 @@ const Home: FunctionComponent = () => {
             setMovies(data.Search);
           }
           setHasError(false);
-          setLoading(false);
         } catch (error) {
           setHasError(true);
+        } finally {
           setLoading(false);
         }
       } else {
@@ -37,17 +35,6 @@ const Home: FunctionComponent = () => {
 
     fetchData();
   }, [searchParams]);
-
-  useEffect(() => {
-    // Update the searchParam if navigating from another route
-    if (searchValue !== searchQuery && searchQuery !== undefined) {
-      const params = new URLSearchParams(`search=${searchQuery}`);
-      setSearchParams(params);
-    } else if(searchValue) {
-      // Update the searchQuery on direct search, example directly to: https://example/?search=test
-      setSearchQuery(searchValue);
-    }
-  }, [searchQuery])
 
   return (
     <>

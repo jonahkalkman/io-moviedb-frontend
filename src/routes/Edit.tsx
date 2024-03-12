@@ -1,9 +1,7 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent } from 'react';
 import { useFormik } from 'formik';
 import { useParams } from 'react-router-dom';
-import { IMDBMovie } from '../model/movie';
 import { useMovieContext } from '../contexts/MovieContext';
-import Spinner from '../components/Spinner';
 
 interface EditableMovie {
   title: string;
@@ -17,10 +15,10 @@ enum FormStatus {
 } 
 
 const Edit: FunctionComponent = () => {
-  const [loading, setLoading] = useState<boolean>(true);
   const {favorites, setFavorites} = useMovieContext();
   const { movieId } = useParams();
-  const [movie, setMovie] = useState<IMDBMovie>();
+  const movie = favorites.find(movie => movie.imdbID === movieId);
+
 
   const updateFavorite = (values: EditableMovie) => {
     const movieToUpdate = favorites.find(movie => movie.imdbID === movieId);
@@ -39,18 +37,6 @@ const Edit: FunctionComponent = () => {
       formik.setStatus(FormStatus.Failed);
     }
   };
-
-  useEffect(() => {
-    if (movieId) {
-      const movie = favorites.find(movie => movie.imdbID === movieId);
-      if (movie) {
-        setMovie(movie);
-        setLoading(false); 
-      } else {
-        setLoading(false);
-      }
-    }
-  }, [movieId]);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -88,9 +74,6 @@ const Edit: FunctionComponent = () => {
 
   return (
     <>
-      {loading ? (
-        <Spinner />
-      ) : (
         <div className="bg-white">
           <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
             <div className="lg:grid lg:grid-cols-2 lg:gap-x-8 lg:items-start">
@@ -170,7 +153,7 @@ const Edit: FunctionComponent = () => {
             </div>
           </div>
         </div>
-      )}
+      
     </>
   );
 };

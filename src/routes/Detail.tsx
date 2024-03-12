@@ -7,23 +7,14 @@ import { useMovieContext } from '../contexts/MovieContext';
 import { getMovieDetails } from '../api/getMovieDetails';
 
 const Detail: FunctionComponent = () => {
+  const navigate = useNavigate();
+  const { movieId } = useParams();
+  const { favorites, setFavorites } = useMovieContext();
   const [hasError, setHasError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [toggled, setToggled] = useState<boolean>(false);
   const [movie, setMovie] = useState<IMDBMovie>();
-  const { favorites, setFavorites } = useMovieContext();
-  const { movieId } = useParams();
-  const navigate = useNavigate();
 
-  const isFavorite = () => {
-    if (favorites.filter((movie) => movie.imdbID === movieId).length >= 1) {
-      setToggled(true);
-    }
-  };
-
-  useEffect(() => {
-    isFavorite();
-  });
+  const isFavorite = favorites.filter((movie) => movie.imdbID === movieId).length >= 1
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,9 +55,9 @@ const Detail: FunctionComponent = () => {
                 </div>
                 <div className="mt-10 px-4 sm:px-0 sm:mt-16 lg:mt-0">
                   <Toggle
-                    isToggled={toggled}
+                    isToggled={isFavorite}
                     onToggle={(toggled: boolean) => {
-                      if (movie && toggled) {
+                      if (movie && isFavorite) {
                         setFavorites([...favorites, movie]);
                       } else {
                         setFavorites(
