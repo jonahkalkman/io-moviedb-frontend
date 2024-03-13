@@ -5,7 +5,7 @@ export interface OverviewSearch {
 }
 
 export interface MovieOverview {
-  Poster: string;
+  Poster?: string;
   Title: string;
   Type: string;
   Year: string;

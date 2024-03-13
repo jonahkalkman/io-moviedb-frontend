@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 
 interface BaseMovieCardProps {
   id: string;
-  image: string;
   title: string;
   year: string;
+  image?: string;
 }
 
 interface EditableMovieCardProps extends BaseMovieCardProps {
@@ -39,7 +39,7 @@ const MovieCard: FunctionComponent<MovieCardProps> = (props) => {
 
   const cardContent = (
     <div className="flex flex-1 flex-col">
-      {image ? (
+      {image && image !== 'N/A' ? (
         <img className="mx-auto mt-4 h-48" src={image} alt={title} />
       ) : (
         <img className="mx-auto mt-4 h-48" src={placeholderImage} alt={title} />
