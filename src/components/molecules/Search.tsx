@@ -23,6 +23,7 @@ const Search: FunctionComponent = () => {
       clearTimeout(debounceTimer);
     }
 
+    // If the value is not empty, set a new debounce timer
     if (value !== '') {
       const timer = setTimeout(() => {
         handleNavigation(value);
@@ -30,7 +31,7 @@ const Search: FunctionComponent = () => {
 
       setDebounceTimer(timer);
     } else {
-      // No debounce if the value is empty by typing or clearing the field
+      // Immediately trigger the action if the value is empty
       handleNavigation(value);
     }
   };
@@ -51,7 +52,7 @@ const Search: FunctionComponent = () => {
           <SearchIcon />
         </div>
         <input
-          className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:border-rose-500 focus:text-gray-900 focus:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-rose-500 sm:text-sm"
+          className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-3 text-sm placeholder-gray-500  focus:text-gray-900 focus:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-rose-500 sm:text-sm"
           placeholder="Search"
           type="search"
           required
