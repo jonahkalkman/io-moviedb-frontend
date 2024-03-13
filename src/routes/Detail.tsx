@@ -1,8 +1,8 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Toggle from '../components/Toggle';
-import { IMDBMovie } from '../model/movie';
-import Spinner from '../components/Spinner';
+import Toggle from '../components/atoms/Toggle';
+import { IMDBMovie } from '../models/movie';
+import Spinner from '../components/molecules/Spinner';
 import { useMovieContext } from '../contexts/MovieContext';
 import { getMovieDetails } from '../api/getMovieDetails';
 
@@ -17,7 +17,8 @@ const Detail: FunctionComponent = () => {
   const [movie, setMovie] = useState<IMDBMovie>();
 
   const isFavorite =
-    favorites.filter((movie) => movie.imdbID === movieId).length >= 1;
+    favorites.filter((favoriteMovie) => favoriteMovie.imdbID === movieId)
+      .length >= 1;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,10 +40,16 @@ const Detail: FunctionComponent = () => {
   }, [movieId]);
 
   const handleToggle = () => {
-    if (movie && !isFavorite) {
-      setFavorites([...favorites, movie]);
-    } else {
-      setFavorites(favorites.filter((movie) => movie.imdbID !== movie.imdbID));
+    if (movie) {
+      if (!isFavorite) {
+        setFavorites([...favorites, movie]);
+      } else {
+        setFavorites(
+          favorites.filter(
+            (favoriteMovie) => favoriteMovie.imdbID !== movie.imdbID,
+          ),
+        );
+      }
     }
   };
 
@@ -54,18 +61,18 @@ const Detail: FunctionComponent = () => {
         <>
           {movie ? (
             <div className="bg-white">
-              <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-                <div className="lg:grid lg:grid-cols-2 lg:gap-x-8 lg:items-start">
+              <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+                <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
                   <div>
-                    <div className="w-full aspect-w-1 aspect-h-1">
+                    <div className="aspect-w-1 aspect-h-1 w-full">
                       <img
-                        className="w-full h-full object-center object-cover sm:rounded-lg"
+                        className="h-full w-full object-cover object-center sm:rounded-lg"
                         src={movie.Poster}
                         alt={movie.Title}
                       />
                     </div>
                   </div>
-                  <div className="mt-10 px-4 sm:px-0 sm:mt-16 lg:mt-0">
+                  <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
                     <Toggle isToggled={isFavorite} onToggle={handleToggle} />
                     <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">
                       {movie.Title}
@@ -78,7 +85,7 @@ const Detail: FunctionComponent = () => {
                     </div>
                     <div className="mt-6">
                       <h3 className="sr-only">Description</h3>
-                      <div className="text-base text-gray-700 space-y-6">
+                      <div className="space-y-6 text-base text-gray-700">
                         <p>{movie.Plot}</p>
                       </div>
                     </div>
@@ -93,7 +100,7 @@ const Detail: FunctionComponent = () => {
         </>
       )}
       {hasError ? (
-        <p className="text-red-500 mt-5">
+        <p className="mt-5 text-red-500">
           Oops! Something went wrong, try again later.
         </p>
       ) : null}

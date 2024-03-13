@@ -7,7 +7,7 @@ const Navigation: FunctionComponent = () => {
       <li>
         <NavLink
           to="/"
-          className="block bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded mb-2 w-full"
+          className="mb-2 block w-full rounded bg-gray-300 py-2 px-4 font-bold text-gray-800 hover:bg-gray-400"
         >
           Home
         </NavLink>
@@ -15,7 +15,7 @@ const Navigation: FunctionComponent = () => {
       <li>
         <NavLink
           to="/favorites"
-          className="block bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded w-full"
+          className="block w-full rounded bg-gray-300 py-2 px-4 font-bold text-gray-800 hover:bg-gray-400"
         >
           Favorites
         </NavLink>

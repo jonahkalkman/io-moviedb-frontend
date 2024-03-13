@@ -1,9 +1,9 @@
 import { FunctionComponent, useEffect, useState } from 'react';
-import MovieCard from '../components/MovieCard';
+import MovieCard from '../components/molecules/MovieCard';
 import { useSearchParams } from 'react-router-dom';
-import Spinner from '../components/Spinner';
+import Spinner from '../components/molecules/Spinner';
 import { searchMovies } from '../api/searchMovies';
-import { MovieOverview } from '../model/search';
+import { MovieOverview } from '../models/search';
 
 const Home: FunctionComponent = () => {
   const [searchParams] = useSearchParams();
@@ -15,22 +15,27 @@ const Home: FunctionComponent = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (searchValue) {
-        setLoading(true);
-
-        try {
-          const data = await searchMovies(searchValue);
-          if (data) {
-            setMovies(data.Search);
-          }
-          setHasError(false);
-        } catch (error) {
-          setHasError(true);
-        } finally {
-          setLoading(false);
-        }
-      } else {
+      if (!searchValue) {
         setMovies([]);
+        return;
+      }
+
+      setLoading(true);
+
+      try {
+        const data = await searchMovies(searchValue);
+
+        if (data?.Search) {
+          setMovies(data.Search);
+          setHasError(false);
+        } else {
+          setMovies([]);
+          setHasError(true);
+        }
+      } catch (error) {
+        setHasError(true);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -38,14 +43,14 @@ const Home: FunctionComponent = () => {
   }, [searchParams]);
 
   return (
-    <>
+    <div>
       {loading ? (
         <Spinner />
       ) : (
         <>
-          {movies && movies.length > 0 ? (
+          {movies?.length > 0 ? (
             <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {movies?.map((movie) => (
+              {movies.map((movie) => (
                 <MovieCard
                   key={movie.imdbID}
                   id={movie.imdbID}
@@ -69,7 +74,7 @@ const Home: FunctionComponent = () => {
           Oops! Something went wrong, try again later.
         </p>
       ) : null}
-    </>
+    </div>
   );
 };
 

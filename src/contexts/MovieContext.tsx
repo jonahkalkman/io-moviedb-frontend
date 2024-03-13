@@ -1,5 +1,12 @@
-import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import { IMDBMovie } from '../model/movie';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+  useMemo,
+} from 'react';
+import { IMDBMovie } from '../models/movie';
 
 interface MovieContextProps {
   favorites: IMDBMovie[];
@@ -25,20 +32,21 @@ export const MovieProvider: React.FC<MovieProviderProps> = ({ children }) => {
 
   // Save favorites to localStorage whenever favorites change
   useEffect(() => {
-    if(favorites.length > 0) {
+    if (favorites?.length > 0) {
       localStorage.setItem('favorites', JSON.stringify(favorites));
     }
   }, [favorites]);
 
+  const cachedValue = useMemo(() => {
+    return { favorites, setFavorites };
+  }, [favorites, setFavorites]);
+
   return (
-    <MovieContext.Provider
-      value={{ favorites, setFavorites }}
-    >
+    <MovieContext.Provider value={cachedValue}>
       {children}
     </MovieContext.Provider>
   );
 };
-
 
 export const useMovieContext = (): MovieContextProps => {
   const context = useContext(MovieContext);

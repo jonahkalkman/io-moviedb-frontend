@@ -1,9 +1,9 @@
 import { FunctionComponent } from 'react';
-import SpinnerIcon from './icons/SpinnerIcon';
+import SpinnerIcon from '../atoms/SpinnerIcon';
 
 const Spinner: FunctionComponent = () => {
   return (
-    <div className="p-4 flex justify-center text-black transition ease-in-out duration-150 cursor-not-allowed">
+    <div className="flex cursor-not-allowed justify-center p-4 text-black transition duration-150 ease-in-out">
       <SpinnerIcon />
     </div>
   );

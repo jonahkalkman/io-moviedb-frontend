@@ -22,8 +22,8 @@ const Toggle: FunctionComponent<Props> = ({ isToggled, onToggle }: Props) => {
   return (
     <div className="flex flex-row-reverse">
       <button
-        type="button"
         className={buttonClasses}
+        type="button"
         role="switch"
         aria-checked={isToggled}
         onClick={onToggle}

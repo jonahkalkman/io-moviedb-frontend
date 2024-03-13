@@ -27,7 +27,7 @@ const MovieCard: FunctionComponent<MovieCardProps> = (props) => {
     'https://images.placeholders.dev/?width=1000&height=1000&text=%22No%20poster%22';
 
   const renderActions = isEditable ? (
-    <div className="p-4 flex gap-8 mx-auto">
+    <div className="mx-auto flex gap-8 p-4">
       <button className="text-orange-500" onClick={() => props.onEdit(id)}>
         Edit
       </button>
@@ -38,16 +38,16 @@ const MovieCard: FunctionComponent<MovieCardProps> = (props) => {
   ) : null;
 
   const cardContent = (
-    <div className="flex-1 flex flex-col">
+    <div className="flex flex-1 flex-col">
       {image ? (
-        <img className="h-48 mx-auto mt-4" src={image} alt={title} />
+        <img className="mx-auto mt-4 h-48" src={image} alt={title} />
       ) : (
-        <img className="h-48 mx-auto mt-4" src={placeholderImage} alt={title} />
+        <img className="mx-auto mt-4 h-48" src={placeholderImage} alt={title} />
       )}
       <div className="p-4">
-        <h3 className="mt-6 text-gray-900 text-sm font-medium">{title}</h3>
-        <dl className="mt-1 flex-grow flex flex-col justify-between">
-          <dd className="text-gray-500 text-sm">{year}</dd>
+        <h3 className="mt-6 text-sm font-medium text-gray-900">{title}</h3>
+        <dl className="mt-1 flex flex-grow flex-col justify-between">
+          <dd className="text-sm text-gray-500">{year}</dd>
         </dl>
       </div>
       {renderActions}
@@ -55,7 +55,7 @@ const MovieCard: FunctionComponent<MovieCardProps> = (props) => {
   );
 
   return (
-    <li className="col-span-1 flex flex-col text-center bg-white rounded-lg shadow divide-y divide-gray-200">
+    <li className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow">
       {isEditable ? (
         <div>{cardContent}</div>
       ) : (

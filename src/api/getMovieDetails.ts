@@ -1,7 +1,7 @@
-import { IMDBMovie } from '../model/movie';
+import { IMDBMovie } from '../models/movie';
 import { baseApiUrl } from './constants';
 
-export const getMovieDetails = async (movieId: string) => {
+export const getMovieDetails = async (movieId: string): Promise<IMDBMovie> => {
   try {
     const response = await fetch(`${baseApiUrl}&i=${movieId}`);
 
@@ -14,8 +14,11 @@ export const getMovieDetails = async (movieId: string) => {
     if (data.Response === 'False') {
       throw new Error('No data found for this movie ID');
     }
+
     return data;
   } catch (error) {
-    throw new Error('Error fetching data');
+    throw new Error(
+      `Error fetching data: ${error instanceof Error ? error.message : 'Unknown error'}`,
+    );
   }
 };

@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import { useFormik } from 'formik';
+import { FormikErrors, FormikValues, useFormik } from 'formik';
 import { useParams } from 'react-router-dom';
 import { useMovieContext } from '../contexts/MovieContext';
 
@@ -49,8 +49,8 @@ const Edit: FunctionComponent = () => {
       year: movie?.Year ?? '',
       actors: movie?.Actors ?? '',
     },
-    validate: (values) => {
-      const errors: any = {};
+    validate: (values: FormikValues) => {
+      const errors: FormikErrors<FormikValues> = {};
       if (!values.title) {
         errors.title = 'Title is a required field';
       }
@@ -78,21 +78,21 @@ const Edit: FunctionComponent = () => {
 
   return (
     <div className="bg-white">
-      <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-        <div className="lg:grid lg:grid-cols-2 lg:gap-x-8 lg:items-start">
+      <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+        <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
           {movie ? (
             <div>
               <div>
-                <div className="w-full aspect-w-1 aspect-h-1">
+                <div className="aspect-w-1 aspect-h-1 w-full">
                   <img
-                    className="w-full h-full object-center object-cover sm:rounded-lg"
+                    className="h-full w-full object-cover object-center sm:rounded-lg"
                     src={movie.Poster}
                     alt={movie.Title}
                   />
                 </div>
               </div>
               <form onSubmit={formik.handleSubmit}>
-                <div className="mt-10 px-4 sm:px-0 sm:mt-16 lg:mt-0">
+                <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
                   <div className="mb-8">
                     <label
                       className="block text-sm font-medium text-gray-700"
@@ -105,12 +105,12 @@ const Edit: FunctionComponent = () => {
                         id="title"
                         name="title"
                         type="text"
-                        className="shadow-sm p-2 block w-full sm:text-sm border-gray-300 rounded-md"
+                        className="block w-full rounded-md border-gray-300 p-2 shadow-sm sm:text-sm"
                         onChange={handleInputChange}
                         value={formik.values.title}
                       />
                       {formik.errors.title ? (
-                        <p className="text-red-500 mt-1">
+                        <p className="mt-1 text-red-500">
                           {formik.errors.title}
                         </p>
                       ) : null}
@@ -129,12 +129,12 @@ const Edit: FunctionComponent = () => {
                         id="year"
                         name="year"
                         type="text"
-                        className="shadow-sm p-2 block w-full sm:text-sm border-gray-300 rounded-md"
+                        className="block w-full rounded-md border-gray-300 p-2 shadow-sm sm:text-sm"
                         onChange={handleInputChange}
                         value={formik.values.year}
                       />
                       {formik.errors.year ? (
-                        <p className="text-red-500 mt-1">
+                        <p className="mt-1 text-red-500">
                           {formik.errors.year}
                         </p>
                       ) : null}
@@ -153,12 +153,12 @@ const Edit: FunctionComponent = () => {
                         id="actors"
                         name="actors"
                         type="text"
-                        className="shadow-sm p-2 block w-full sm:text-sm border-gray-300 rounded-md"
+                        className="block w-full rounded-md border-gray-300 p-2 shadow-sm sm:text-sm"
                         onChange={handleInputChange}
                         value={formik.values.actors}
                       />
                       {formik.errors.actors ? (
-                        <p className="text-red-500 mt-1">
+                        <p className="mt-1 text-red-500">
                           {formik.errors.actors}
                         </p>
                       ) : null}
@@ -173,12 +173,12 @@ const Edit: FunctionComponent = () => {
                     </button>
                   </div>
                   {formik.status === FormStatus.Success ? (
-                    <p className="text-green-500 mt-5">
+                    <p className="mt-5 text-green-500">
                       Succesfully updated the movie!
                     </p>
                   ) : null}
                   {formik.status === FormStatus.Failed ? (
-                    <p className="text-red-500 mt-5">
+                    <p className="mt-5 text-red-500">
                       Failed to update the movie. Try again later.
                     </p>
                   ) : null}
