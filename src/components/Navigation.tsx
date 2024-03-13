@@ -1,25 +1,25 @@
-import { FunctionComponent } from "react";
-import { NavLink } from "react-router-dom";
+import { FunctionComponent } from 'react';
+import { NavLink } from 'react-router-dom';
 
 const Navigation: FunctionComponent = () => {
   return (
     <ul>
-        <li>
+      <li>
         <NavLink
-            to="/"
-            className="block bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded mb-2 w-full"
+          to="/"
+          className="block bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded mb-2 w-full"
         >
-            Home
+          Home
         </NavLink>
-        </li>
-        <li>
+      </li>
+      <li>
         <NavLink
-            to="/favorites"
-            className="block bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded w-full"
+          to="/favorites"
+          className="block bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded w-full"
         >
-            Favorites
+          Favorites
         </NavLink>
-        </li>
+      </li>
     </ul>
   );
 };

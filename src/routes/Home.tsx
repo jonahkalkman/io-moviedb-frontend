@@ -7,10 +7,11 @@ import { MovieOverview } from '../model/search';
 
 const Home: FunctionComponent = () => {
   const [searchParams] = useSearchParams();
+  const searchValue = searchParams.get('search');
+
   const [hasError, setHasError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [movies, setMovies] = useState<MovieOverview[]>([]);
-  const searchValue = searchParams.get('search');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,7 +20,7 @@ const Home: FunctionComponent = () => {
 
         try {
           const data = await searchMovies(searchValue);
-          if(data) {
+          if (data) {
             setMovies(data.Search);
           }
           setHasError(false);
@@ -43,11 +44,8 @@ const Home: FunctionComponent = () => {
       ) : (
         <>
           {movies && movies.length > 0 ? (
-            <ul
-              role="list"
-              className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-            >
-              {movies && movies.map((movie) => (
+            <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+              {movies?.map((movie) => (
                 <MovieCard
                   key={movie.imdbID}
                   id={movie.imdbID}
@@ -59,12 +57,18 @@ const Home: FunctionComponent = () => {
             </ul>
           ) : (
             <>
-              {searchValue ? <p className="text-red-500">No movies found for your search.</p> : null }
+              {searchValue ? (
+                <p className="text-red-500">No movies found for your search.</p>
+              ) : null}
             </>
-          )}   
+          )}
         </>
       )}
-      {hasError ? <p className="text-red-500">Oops! Something went wrong, try again later.</p> : null}
+      {hasError ? (
+        <p className="text-red-500">
+          Oops! Something went wrong, try again later.
+        </p>
+      ) : null}
     </>
   );
 };

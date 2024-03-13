@@ -1,14 +1,20 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, useState } from 'react';
 import { createSearchParams, useNavigate } from 'react-router-dom';
-import { useMovieContext } from '../contexts/MovieContext';
-import SearchIcon from './SearchIcon';
+import SearchIcon from './icons/SearchIcon';
 
 const Search: FunctionComponent = () => {
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState<string>('');
   const [debounceTimer, setDebounceTimer] = useState<number | null>(null);
 
-  const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleNavigation = (value: string) => {
+    navigate({
+      pathname: '/',
+      search: createSearchParams({ search: value }).toString(),
+    });
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
     setSearchValue(value);
 
@@ -17,25 +23,23 @@ const Search: FunctionComponent = () => {
       clearTimeout(debounceTimer);
     }
 
-    if(value !== '') {
+    if (value !== '') {
       const timer = setTimeout(() => {
-        navigate({
-          pathname: '/',
-          search: createSearchParams({
-            search: value,
-          }).toString(),
-        });
+        handleNavigation(value);
       }, 500);
-  
+
       setDebounceTimer(timer);
-    } else {
+    } else { 
       // No debounce if the value is empty by typing or clearing the field
-      navigate({
-        pathname: '/',
-        search: createSearchParams({
-          search: value,
-        }).toString(),
-      });
+      handleNavigation(value);
+    }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const value = event.currentTarget.value;
+
+    if (event.key === 'Enter') {
+      handleNavigation(value);
     }
   };
 
@@ -44,7 +48,6 @@ const Search: FunctionComponent = () => {
       <label className="sr-only">{}</label>
       <div className="relative">
         <div className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
-          {/* SVG Icon */}
           <SearchIcon />
         </div>
         <input
@@ -53,7 +56,8 @@ const Search: FunctionComponent = () => {
           type="search"
           required
           value={searchValue}
-          onChange={onSearchChange}
+          onKeyDown={handleKeyDown}
+          onChange={handleChange}
         />
       </div>
     </div>

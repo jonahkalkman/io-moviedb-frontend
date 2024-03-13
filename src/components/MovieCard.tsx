@@ -23,10 +23,17 @@ type MovieCardProps = EditableMovieCardProps | NonEditableMovieCardProps;
 const MovieCard: FunctionComponent<MovieCardProps> = (props) => {
   const { id, image, title, year, isEditable } = props;
 
-  const renderActions = isEditable ? (  
+  const placeholderImage =
+    'https://images.placeholders.dev/?width=1000&height=1000&text=%22No%20poster%22';
+
+  const renderActions = isEditable ? (
     <div className="p-4 flex gap-8 mx-auto">
-      <button className="text-orange-500" onClick={() => (props as EditableMovieCardProps).onEdit(id)}>Edit</button>
-      <button className="text-red-500" onClick={() => (props as EditableMovieCardProps).onDelete(id)}>Delete</button>
+      <button className="text-orange-500" onClick={() => props.onEdit(id)}>
+        Edit
+      </button>
+      <button className="text-red-500" onClick={() => props.onDelete(id)}>
+        Delete
+      </button>
     </div>
   ) : null;
 
@@ -35,11 +42,7 @@ const MovieCard: FunctionComponent<MovieCardProps> = (props) => {
       {image ? (
         <img className="h-48 mx-auto mt-4" src={image} alt={title} />
       ) : (
-        <img 
-          className="h-48 mx-auto mt-4" 
-          src={'https://images.placeholders.dev/?width=1000&height=1000&text=%22No%20poster%22'} 
-          alt={title} 
-        />
+        <img className="h-48 mx-auto mt-4" src={placeholderImage} alt={title} />
       )}
       <div className="p-4">
         <h3 className="mt-6 text-gray-900 text-sm font-medium">{title}</h3>

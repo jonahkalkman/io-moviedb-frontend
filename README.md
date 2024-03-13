@@ -13,3 +13,6 @@ VITE_OMDB_API_KEY="APIKEY"
 - Create Error component for all errors
 - Move all text to JSON file
 - Fix max words per line with Prettier / format on save
+- Eslint add
+- @ paths instead of ../ paths
+- tailwind order classes

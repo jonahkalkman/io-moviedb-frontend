@@ -4,19 +4,24 @@ import MovieCard from '../components/MovieCard';
 import { useNavigate } from 'react-router-dom';
 
 const Favorites: FunctionComponent = () => {
-  const { favorites, setFavorites } = useMovieContext();
   const navigate = useNavigate();
+  const { favorites, setFavorites } = useMovieContext();
 
-  const deleteFavoriteMovie = (id: string) => {
-    setFavorites(favorites.filter(movie => movie.imdbID !== id));
-  }
+  const handleEdit = (id: string) => {
+    navigate(`/edit/${id}`, {
+      state: {
+        movieId: id,
+      },
+    });
+  };
+
+  const handleDelete = (id: string) => {
+    setFavorites(favorites.filter((movie) => movie.imdbID !== id));
+  };
 
   return (
-    <ul
-      role="list"
-      className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-    >
-      {favorites
+    <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      {favorites && favorites.length > 0
         ? favorites.map((favoriteMovie) => (
             <MovieCard
               key={favoriteMovie.imdbID}
@@ -25,16 +30,8 @@ const Favorites: FunctionComponent = () => {
               image={favoriteMovie.Poster}
               year={favoriteMovie.Year}
               isEditable={true}
-              onEdit={(id: string) => {
-                navigate(`/edit/${id}`, {
-                  state: {
-                    movieId: id
-                  }
-                })
-              }}
-              onDelete={(id: string) => {
-                deleteFavoriteMovie(id);
-              }}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
             />
           ))
         : null}
