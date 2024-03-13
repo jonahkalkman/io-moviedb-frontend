@@ -88,6 +88,7 @@ const Edit: FunctionComponent = () => {
                     className="h-full w-full object-cover object-center sm:rounded-lg"
                     src={movie.Poster}
                     alt={movie.Title}
+                    loading="lazy"
                   />
                 </div>
               </div>

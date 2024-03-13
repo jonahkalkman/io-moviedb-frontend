@@ -40,9 +40,19 @@ const MovieCard: FunctionComponent<MovieCardProps> = (props) => {
   const cardContent = (
     <div className="flex flex-1 flex-col">
       {image && image !== 'N/A' ? (
-        <img className="mx-auto mt-4 h-48" src={image} alt={title} />
+        <img
+          className="mx-auto mt-4 h-48"
+          src={image}
+          alt={title}
+          loading="lazy"
+        />
       ) : (
-        <img className="mx-auto mt-4 h-48" src={placeholderImage} alt={title} />
+        <img
+          className="mx-auto mt-4 h-48"
+          src={placeholderImage}
+          alt={title}
+          loading="lazy"
+        />
       )}
       <div className="p-4">
         <h3 className="mt-6 text-sm font-medium text-gray-900">{title}</h3>
