@@ -30,7 +30,6 @@ const Home: FunctionComponent = () => {
           setHasError(false);
         } else {
           setMovies([]);
-          setHasError(true);
         }
       } catch (error) {
         setHasError(true);
@@ -40,7 +39,7 @@ const Home: FunctionComponent = () => {
     };
 
     fetchData();
-  }, [searchParams]);
+  }, [searchValue]);
 
   return (
     <div>
@@ -63,7 +62,10 @@ const Home: FunctionComponent = () => {
           ) : (
             <>
               {searchValue ? (
-                <p className="text-red-500">No movies found for your search.</p>
+                <p className="text-red-500">
+                  Oops! No movies found for your search. Try another movie
+                  title.
+                </p>
               ) : null}
             </>
           )}
