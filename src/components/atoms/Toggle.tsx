@@ -20,7 +20,7 @@ const Toggle: FunctionComponent<Props> = ({ isToggled, onToggle }: Props) => {
   });
 
   return (
-    <div className="flex flex-row-reverse">
+    <div className="flex flex-row-reverse gap-2">
       <button
         className={buttonClasses}
         type="button"

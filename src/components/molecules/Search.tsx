@@ -45,7 +45,7 @@ const Search: FunctionComponent = () => {
   };
 
   return (
-    <div className="w-full" role="search">
+    <div className="w-full lg:w-1/2" role="search">
       <label className="sr-only">{}</label>
       <div className="relative">
         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">

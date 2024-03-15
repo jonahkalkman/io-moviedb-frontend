@@ -16,6 +16,9 @@ const Detail: FunctionComponent = () => {
   const [loading, setLoading] = useState(false);
   const [movie, setMovie] = useState<IMDBMovie>();
 
+  const placeholderImage =
+    'https://images.placeholders.dev/?width=1000&height=1000&text=%22No%20poster%22';
+
   const isFavorite =
     favorites.filter((favoriteMovie) => favoriteMovie.imdbID === movieId)
       .length >= 1;
@@ -61,16 +64,22 @@ const Detail: FunctionComponent = () => {
         <>
           {movie ? (
             <div className="bg-white">
-              <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+              <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8 lg:py-0">
                 <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
                   <div>
                     <div className="aspect-w-1 aspect-h-1 w-full">
-                      <img
-                        className="h-full w-full object-cover object-center sm:rounded-lg"
-                        src={movie.Poster}
-                        alt={movie.Title}
-                        loading="lazy"
-                      />
+                      <figure>
+                        <img
+                          className="h-full w-full object-cover object-center sm:rounded-lg"
+                          src={
+                            movie.Poster && movie.Poster !== 'N/A'
+                              ? movie.Poster
+                              : placeholderImage
+                          }
+                          alt={movie.Title}
+                          loading="lazy"
+                        />
+                      </figure>
                     </div>
                   </div>
                   <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
@@ -91,7 +100,12 @@ const Detail: FunctionComponent = () => {
                       </div>
                     </div>
                     <div className="mt-8 flex justify-between">
-                      <button onClick={() => navigate(-1)}>Back to list</button>
+                      <button
+                        onClick={() => navigate(-1)}
+                        className="active mb-2 block w-fit rounded bg-gray-300 py-2 px-4 font-bold text-gray-800 hover:bg-gray-400"
+                      >
+                        Back to list
+                      </button>
                     </div>
                   </div>
                 </div>

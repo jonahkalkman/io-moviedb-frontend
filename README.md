@@ -18,4 +18,4 @@ VITE_OMDB_API_KEY="APIKEY"
 - Move all text to JSON file
 - Fix max words per line with Prettier / format on save
 - @ paths instead of ../ paths
-- tab color of search input
+- Add semantic HTML and ARIA attributes
