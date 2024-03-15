@@ -2,6 +2,7 @@ import { FunctionComponent, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FormikErrors, FormikValues, useFormik } from 'formik';
 import { useMovieContext } from '../contexts/MovieContext';
+import InputField from '../components/atoms/InputField';
 
 interface EditableMovie {
   title: string;
@@ -75,6 +76,10 @@ const Edit: FunctionComponent = () => {
     formik.handleChange(e);
   };
 
+  const renderError = (error: string | undefined) => {
+    return <>{error ? <p className="mt-1 text-red-500">{error}</p> : null}</>;
+  };
+
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8 lg:py-0">
@@ -106,17 +111,13 @@ const Edit: FunctionComponent = () => {
                     Title
                   </label>
                   <div className="mt-1">
-                    <input
-                      id="title"
-                      name="title"
-                      type="text"
-                      className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-3 text-sm placeholder-gray-500 sm:text-sm"
-                      onChange={handleInputChange}
+                    <InputField
+                      title="title"
                       value={formik.values.title}
+                      inputType="string"
+                      onValueChange={handleInputChange}
                     />
-                    {formik.errors.title ? (
-                      <p className="mt-1 text-red-500">{formik.errors.title}</p>
-                    ) : null}
+                    {renderError(formik.errors.title)}
                   </div>
                 </div>
 
@@ -128,17 +129,13 @@ const Edit: FunctionComponent = () => {
                     Year
                   </label>
                   <div className="mt-1">
-                    <input
-                      id="year"
-                      name="year"
-                      type="number"
-                      className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-3 text-sm placeholder-gray-500 sm:text-sm"
-                      onChange={handleInputChange}
+                    <InputField
+                      title="year"
                       value={formik.values.year}
+                      inputType="number"
+                      onValueChange={handleInputChange}
                     />
-                    {formik.errors.year ? (
-                      <p className="mt-1 text-red-500">{formik.errors.year}</p>
-                    ) : null}
+                    {renderError(formik.errors.year)}
                   </div>
                 </div>
 
@@ -150,24 +147,18 @@ const Edit: FunctionComponent = () => {
                     Actors
                   </label>
                   <div className="mt-1">
-                    <input
-                      id="actors"
-                      name="actors"
-                      type="text"
-                      className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-3 text-sm placeholder-gray-500 sm:text-sm"
-                      onChange={handleInputChange}
+                    <InputField
+                      title="actors"
                       value={formik.values.actors}
+                      inputType="string"
+                      onValueChange={handleInputChange}
                     />
-                    {formik.errors.actors ? (
-                      <p className="mt-1 text-red-500">
-                        {formik.errors.actors}
-                      </p>
-                    ) : null}
+                    {renderError(formik.errors.actors)}
                   </div>
                 </div>
                 <div className="mt-8 flex justify-between">
                   <button
-                    className="active mb-2 block w-fit rounded bg-gray-300 py-2 px-4 font-bold text-gray-800 hover:bg-gray-400 disabled:opacity-50"
+                    className="active mb-2 block w-fit rounded bg-gray-300 py-2 px-4 font-bold text-gray-800 hover:bg-gray-400 disabled:cursor-not-allowed disabled:opacity-50"
                     type="submit"
                     disabled={!formik.isValid}
                   >
