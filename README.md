@@ -15,7 +15,6 @@ VITE_OMDB_API_KEY="APIKEY"
 # Improvements
 
 - Create Error component for all errors
+- Create Input component for all input fields
 - Move all text to JSON file
-- Fix max words per line with Prettier / format on save
 - @ paths instead of ../ paths
-- Add semantic HTML and ARIA attributes

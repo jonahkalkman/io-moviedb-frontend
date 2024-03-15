@@ -14,6 +14,9 @@ const Home: FunctionComponent = () => {
   const [movies, setMovies] = useState<MovieOverview[]>([]);
 
   useEffect(() => {
+    setMovies([]);
+    setHasError(false);
+
     const fetchData = async () => {
       if (!searchValue) {
         setMovies([]);
@@ -61,7 +64,7 @@ const Home: FunctionComponent = () => {
             </ul>
           ) : (
             <>
-              {searchValue ? (
+              {searchValue && !hasError ? (
                 <p className="text-red-500">
                   Oops! No movies found for your search. Try another movie
                   title.
