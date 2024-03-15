@@ -14,7 +14,6 @@ VITE_OMDB_API_KEY="APIKEY"
 
 # Improvements
 
-- Create Error component for all errors
-- Create Input component for all input fields
 - Move all text to JSON file
 - @ paths instead of ../ paths
+- Create image component for movie poster and add placeholder image to local files
